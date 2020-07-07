@@ -7,6 +7,8 @@ Created on Mon Jul  6 10:25:59 2020
 """
 
 class Applicant :
+   """ This Class holds the applicant details. """
+   
    def __init__(self, name, phoneNumber,memberReferenceId,status):
     self.name = name.strip()
     self.phoneNumber = phoneNumber.strip()

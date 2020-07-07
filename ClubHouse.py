@@ -26,7 +26,7 @@ class ClubHouse :
         return res
         
     def appStatus(self):
-        res = [] 
+        
         applied=0
         verified=0
         approved=0
@@ -40,51 +40,64 @@ class ClubHouse :
             if(val.status=="Approved"):
                 approved=approved+1
             
-                res.append(val)
             
         return "Applied: "+str(applied)+ "\n\nVerified : "+str(verified)+"\n\nAproved : "+str(approved)
     
-    def destroyHash(self,ApplicationRecords): 
-        self.ApplicationRecords
+    def destroyHash(self): 
+        self.ApplicationRecords.clear()
         
         
 def main():
-    c=ClubHouse()
-    c.initializeHash()
+    clubHouse=ClubHouse()
+    clubHouse.initializeHash()
     with open("inputPS8.txt", "r") as inputFile:
         with open("outputPS8.txt", "w") as outFile:
             with open("promptsPS8.txt", "r") as promptsFile:
-                i=0
-                for line in inputFile:
-                    i=i+1
-                    currentline = line.strip().split("/")
-                    c.insertAppDetails(currentline[0], currentline[1],currentline[2],currentline[3])
-                outFile.write("Successfully inserted "+str(i)+"  applications into the system.\n\n")
+    
+                __process_insertion__(inputFile ,outFile,clubHouse)
+                
                 for line in promptsFile:
                    
                     currentline = line.strip().split(":")
                    
                     if(currentline[0].strip()=="Update"):
-                        applicant=currentline[1].split("/")
-                        c.updateAppDetails(applicant[0], applicant[1],applicant[2],applicant[3])
-                        outFile.write("Updated details of "+applicant[0]+". Application Status has been changed.\n\n")
+                        __process_update__(outFile,clubHouse,currentline)
+                       
                       
                     if(currentline[0].strip()=="memberRef") :   
-                        outFile.write("---------- Member reference by "+currentline[1]+" ----------\n\n")
-                        apps=c.memRef(currentline[1].strip())
-                        for val in apps:
-                            outFile.write(val.name+" / "+val.phoneNumber+" / " +val.status+"\n\n")
-                        outFile.write("-----------------------------------------\n\n")
+                        __process_member_reference__(outFile,clubHouse,currentline)
                         
                     if(currentline[0].strip()=="appStatus"):  
-                        outFile.write("-----------Application Status--------------\n\n")
-                        outFile.write(c.appStatus()+"\n\n")
-                        outFile.write("-------------------------------------------\n\n")
-             
-                
-                
+                        __process_app_status__(outFile,clubHouse)
+    clubHouse.destroyHash()   
+       
            
+def __process_member_reference__(outFile ,clubHouse,currentline) :
+    outFile.write("---------- Member reference by "+currentline[1]+" ----------\n\n")
+    apps=clubHouse.memRef(currentline[1].strip())
+    for val in apps:
+        outFile.write(val.name+" / "+val.phoneNumber+" / " +val.status+"\n\n")
+        outFile.write("-------------------------\n\n")
     
+def __process_app_status__(outFile ,clubHouse) :
+    outFile.write("-----------Application Status--------------\n\n")
+    outFile.write(clubHouse.appStatus()+"\n\n")
+    outFile.write("-------------------------\n\n")
+    
+def __process_update__(outFile ,clubHouse,currentline) :
+    applicant=currentline[1].split("/")
+    clubHouse.updateAppDetails(applicant[0], applicant[1],applicant[2],applicant[3])
+    outFile.write("Updated details of "+applicant[0]+". Application Status has been changed.\n\n")
+    
+def __process_insertion__(inputFile ,outFile,clubHouse) :
+    i=0
+    for line in inputFile:
+        i=i+1
+        currentline = line.strip().split("/")
+        clubHouse.insertAppDetails(currentline[0], currentline[1],currentline[2],currentline[3])
+    outFile.write("Successfully inserted "+str(i)+"  applications into the system.\n\n") 
+    
+         
 if __name__ == "__main__":
     main()   
     

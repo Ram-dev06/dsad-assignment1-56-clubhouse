@@ -9,8 +9,8 @@ def hashId(key, size):
 class HashTable:
    
 
-    def __init__(self, capacity=1000):
-        """ Capacity defaults to 1000. """
+    def __init__(self, capacity=100):
+        """ Capacity defaults to 100. """
 
         self.capacity = capacity
         self.size = 0
@@ -66,8 +66,12 @@ class HashTable:
                 return ""
 
         return self._find_by_key(key, find_result_func)
-
-
+    
+    def clear(self):
+        self._keys.clear()
+        self._values.clear()
+        self.size=0
+   
     ####### Python's dict interface
 
 
