@@ -64,15 +64,15 @@ def main():
 
                     currentline = line.strip().split(":")
 
-                    if(currentline!= None and len(currentline)>1  and currentline[0].strip()=="Update"):
+                    if(currentline!= None and len(currentline)>0  and currentline[0].strip()=="Update"):
                         __process_update__(outFile,appRecords,currentline)
-                    elif (currentline!= None and len(currentline)>1  and currentline[0].strip()=="memberRef"):
+                    elif (currentline!= None and currentline[0].strip()=="memberRef"):
                         __process_member_reference__(outFile,appRecords,currentline)
 
-                    elif(currentline!= None and len(currentline)>1  and currentline[0].strip()=="appStatus"):
+                    elif(currentline!= None  and currentline[0].strip()=="appStatus"):
                         __process_app_status__(outFile,appRecords)
     
-    destroyHash(appRecords) # clean the hash table
+    destroyHash(appRecords) # 
 
 
 def __process_member_reference__(outFile ,appRecords,currentline) :
