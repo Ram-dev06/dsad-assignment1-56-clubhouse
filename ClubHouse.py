@@ -19,7 +19,7 @@ def memRef(ApplicationRecords, memRefId):
     for val in ApplicationRecords.records.values():
         if val.memberReferenceId== memRefId :
               res.append(val)
-
+   
     return res
 
 def appStatus(ApplicationRecords):
@@ -35,6 +35,7 @@ def appStatus(ApplicationRecords):
             verified=verified+1
         if(val.status=="Approved"):
             approved=approved+1
+         
 
 
     return "Applied: "+str(applied)+ "\n\nVerified : "+str(verified)+"\n\nAproved : "+str(approved)
@@ -46,7 +47,7 @@ def destroyHash(ApplicationRecords):
 class ApplicationRecords :
 
     def initializeHash(self):
-        self.records=HashTable()
+        self.records=HashTable(2)
 
 
 def main():

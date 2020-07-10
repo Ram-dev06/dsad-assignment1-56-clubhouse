@@ -14,6 +14,7 @@ class HashTable:
     def __init__(self, capacity=100):
         """ This method initialize the Hash table with capacity 100. size 
         0 , key array as empty and entry as a array of size of capacity."""
+        
         self.capacity = capacity
         self.size = 0
         self._keys = []
@@ -89,6 +90,7 @@ class HashTable:
     def values(self):
         res = [] 
         for val in self._entry: 
-            if val != [] : 
-                res.append(self.get(val[0][0]))
+         for innerVal in val:
+                if val != [] : 
+                    res.append(self.get(innerVal[0]))
         return res
